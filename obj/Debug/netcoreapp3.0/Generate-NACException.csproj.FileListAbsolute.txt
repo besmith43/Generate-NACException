@@ -1,0 +1,11 @@
+D:\Git Projects\Generate-NACException\bin\Debug\netcoreapp3.0\Generate-NACException.exe
+D:\Git Projects\Generate-NACException\bin\Debug\netcoreapp3.0\Generate-NACException.deps.json
+D:\Git Projects\Generate-NACException\bin\Debug\netcoreapp3.0\Generate-NACException.runtimeconfig.json
+D:\Git Projects\Generate-NACException\bin\Debug\netcoreapp3.0\Generate-NACException.runtimeconfig.dev.json
+D:\Git Projects\Generate-NACException\bin\Debug\netcoreapp3.0\Generate-NACException.dll
+D:\Git Projects\Generate-NACException\bin\Debug\netcoreapp3.0\Generate-NACException.pdb
+D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.csprojAssemblyReference.cache
+D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.AssemblyInfoInputs.cache
+D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.AssemblyInfo.cs
+D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.dll
+D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.pdb
