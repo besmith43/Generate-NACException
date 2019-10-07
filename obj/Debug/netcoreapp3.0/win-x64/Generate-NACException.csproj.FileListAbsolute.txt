@@ -230,3 +230,4 @@ D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\win-x64\Generate-N
 D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\win-x64\Generate-NACException.csproj.CopyComplete
 D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\win-x64\Generate-NACException.dll
 D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\win-x64\Generate-NACException.pdb
+D:\Git Projects\Generate-NACException\bin\Debug\netcoreapp3.0\win-x64\McMaster.Extensions.CommandLineUtils.dll

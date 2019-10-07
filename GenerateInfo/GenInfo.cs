@@ -103,11 +103,17 @@ namespace Generate_NACException
             OS = "MacOSX";
 
             string ethernet = Bash("networksetup -listallhardwareports | awk '/Hardware Port: Ethernet/{getline; print $2}'");
+            string tbEthernet = Bash("networksetup -listallhardwareports | awk '/Hardware Port: Thunderbolt Ethernet/{getline; print $2}'");
 
             NetworkInterface[] adpaters = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface adapter in adpaters)
             {
                 if (adapter.Name.Equals(ethernet))
+                {
+                    MACInfo.Add(FormatMACAddress(adapter.GetPhysicalAddress().ToString()));
+                }
+
+                if (adapter.Name.Equals(tbEthernet))
                 {
                     MACInfo.Add(FormatMACAddress(adapter.GetPhysicalAddress().ToString()));
                 }

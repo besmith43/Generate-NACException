@@ -1,25 +1,50 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using McMaster.Extensions.CommandLineUtils;
 
 namespace Generate_NACException
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            string path = GetApplicationRoot();
+        public static int Main(string[] args) => CommandLineApplication.Execute<Program>(args);
 
+        [Option(Description = "Verbose")]
+        public bool Verbose { get; }
+
+        private void OnExecute()
+        {
             string hostname = Environment.MachineName.ToUpper();
 
             GenerateInfo info = new GenerateInfo(hostname);
             string csvContent = info.StartGenerateInfo();
 
-            string FileName = GenerateFileName(hostname);
+            string path = "";
+            string FileName = "";
 
-            if(!File.Exists($"{ path }\\{ FileName }"))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                using(StreamWriter sw = File.CreateText($"{ path }\\{ FileName }"))
+#if DEBUG
+                path = GetApplicationRootDebug();
+#else
+                path = GetApplicationRootRelease();
+#endif
+                FileName = $"{ path }\\{ GenerateFileName(hostname) }";
+            }
+            else
+            {
+#if DEBUG
+                path = GetApplicationRootDebug();
+#else
+                path = GetApplicationRootRelease();
+#endif
+                FileName = $"{ path }/{ GenerateFileName(hostname) }";
+            }
+
+            if(!File.Exists(FileName))
+            {
+                using(StreamWriter sw = File.CreateText(FileName))
                 {
                     sw.WriteLine(csvContent);
                 }
@@ -32,22 +57,45 @@ namespace Generate_NACException
 
                 if(Answer == "y" || Answer == "Y" || Answer.ToLower() == "yes")
                 {
-                    File.Delete($"{ path }\\{ FileName }");
-                    using (StreamWriter sw = File.CreateText($"{ path }\\{ FileName }"))
+                    File.Delete(FileName);
+                    using (StreamWriter sw = File.CreateText(FileName))
                     {
                         sw.WriteLine(csvContent);
                     }
                 }
             }
+
+            if(Verbose)
+            {
+                Console.WriteLine($"Path: { FileName }");
+                Console.WriteLine($"CSV Content: { csvContent }");
+            }
         }
 
         // see http://codebuckets.com/2017/10/19/getting-the-root-directory-path-for-net-core-applications/ for original text
-        public static string GetApplicationRoot()
+        public static string GetApplicationRootDebug()
         {
             var exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
             Regex appPathMatcher = new Regex(@"(?<!fil)[A-Za-z]:\\+[\S\s]*?(?=\\+bin)");
             var appRoot = appPathMatcher.Match(exePath).Value;
             return appRoot;
+        }
+
+        public static string GetApplicationRootRelease()
+        {
+            //return Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            //return Path.GetDirectoryName(Environment.CurrentDirectory);
+
+            string tempPath = Environment.CurrentDirectory;
+
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !tempPath.Contains("Desktop"))
+            {
+                return $"{ tempPath }/Desktop";
+            }
+            else
+            {
+                return tempPath;
+            }
         }
 
         public static string GenerateFileName(string host)

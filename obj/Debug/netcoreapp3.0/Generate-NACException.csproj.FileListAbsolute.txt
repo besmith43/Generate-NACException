@@ -20,3 +20,5 @@ D:\Development\VS Community Projects\Generate-NACException\obj\Debug\netcoreapp3
 D:\Development\VS Community Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.AssemblyInfo.cs
 D:\Development\VS Community Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.dll
 D:\Development\VS Community Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.pdb
+D:\Git Projects\Generate-NACException\bin\Debug\netcoreapp3.0\McMaster.Extensions.CommandLineUtils.dll
+D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.csproj.CopyComplete
