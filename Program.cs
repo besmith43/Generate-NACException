@@ -20,6 +20,13 @@ namespace Generate_NACException
             GenerateInfo info = new GenerateInfo(hostname);
             string csvContent = info.StartGenerateInfo();
 
+            if (csvContent.Equals("no ethernet mac addresses found") || csvContent.Equals("non-standard OS"))
+            {
+                Console.WriteLine(csvContent);
+                Console.ReadLine();
+                System.Environment.Exit(1);
+            }
+
             string path = "";
             string FileName = "";
 
@@ -42,7 +49,7 @@ namespace Generate_NACException
                 FileName = $"{ path }/{ GenerateFileName(hostname) }";
             }
 
-            if(!File.Exists(FileName))
+            if (!File.Exists(FileName))
             {
 		try
 		{
@@ -62,7 +69,7 @@ namespace Generate_NACException
                 Console.WriteLine("Would you like to replace it? (y/n)");
                 string Answer = Console.ReadLine();
 
-                if(Answer == "y" || Answer == "Y" || Answer.ToLower() == "yes")
+                if (Answer == "y" || Answer == "Y" || Answer.ToLower() == "yes")
                 {
                     File.Delete(FileName);
                     using (StreamWriter sw = File.CreateText(FileName))
@@ -72,7 +79,7 @@ namespace Generate_NACException
                 }
             }
 
-            if(Verbose)
+            if (Verbose)
             {
                 Console.WriteLine($"Path: { FileName }");
                 Console.WriteLine($"CSV Content: { csvContent }");

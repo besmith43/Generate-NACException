@@ -105,11 +105,8 @@ namespace Generate_NACException
             string ethernet = Bash("networksetup -listallhardwareports | awk '/Hardware Port: Ethernet/{getline; print $2}'");
             string tbEthernet = Bash("networksetup -listallhardwareports | awk '/Hardware Port: Thunderbolt Ethernet/{getline; print $2}'");
 
-ethernet = ethernet.Replace(Environment.NewLine, "");
-tbEthernet = tbEthernet.Replace(Environment.NewLine, "");
-
-Console.WriteLine($"Ethernet: { ethernet }");
-Console.WriteLine($"Thunderbolt Ethernet: { tbEthernet }");
+            ethernet = ethernet.Replace(Environment.NewLine, "");
+            tbEthernet = tbEthernet.Replace(Environment.NewLine, "");
 
             NetworkInterface[] adpaters = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface adapter in adpaters)

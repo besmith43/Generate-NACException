@@ -196,3 +196,4 @@ D:\Git Projects\Generate-NACException\obj\Release\netcoreapp3.0\linux-x64\Genera
 D:\Git Projects\Generate-NACException\obj\Release\netcoreapp3.0\linux-x64\Generate-NACException.csproj.CopyComplete
 D:\Git Projects\Generate-NACException\obj\Release\netcoreapp3.0\linux-x64\Generate-NACException.dll
 D:\Git Projects\Generate-NACException\obj\Release\netcoreapp3.0\linux-x64\Generate-NACException.pdb
+D:\Git Projects\Generate-NACException\bin\Release\netcoreapp3.0\linux-x64\McMaster.Extensions.CommandLineUtils.dll
