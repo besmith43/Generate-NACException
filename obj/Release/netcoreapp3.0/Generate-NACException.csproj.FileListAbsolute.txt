@@ -1,0 +1,13 @@
+/Users/besmith2/Desktop/Generate-NACException/bin/release/netcoreapp3.0/Generate-NACException
+/Users/besmith2/Desktop/Generate-NACException/bin/release/netcoreapp3.0/Generate-NACException.deps.json
+/Users/besmith2/Desktop/Generate-NACException/bin/release/netcoreapp3.0/Generate-NACException.runtimeconfig.json
+/Users/besmith2/Desktop/Generate-NACException/bin/release/netcoreapp3.0/Generate-NACException.runtimeconfig.dev.json
+/Users/besmith2/Desktop/Generate-NACException/bin/release/netcoreapp3.0/Generate-NACException.dll
+/Users/besmith2/Desktop/Generate-NACException/bin/release/netcoreapp3.0/Generate-NACException.pdb
+/Users/besmith2/Desktop/Generate-NACException/bin/release/netcoreapp3.0/McMaster.Extensions.CommandLineUtils.dll
+/Users/besmith2/Desktop/Generate-NACException/obj/release/netcoreapp3.0/Generate-NACException.csprojAssemblyReference.cache
+/Users/besmith2/Desktop/Generate-NACException/obj/release/netcoreapp3.0/Generate-NACException.AssemblyInfoInputs.cache
+/Users/besmith2/Desktop/Generate-NACException/obj/release/netcoreapp3.0/Generate-NACException.AssemblyInfo.cs
+/Users/besmith2/Desktop/Generate-NACException/obj/release/netcoreapp3.0/Generate-NACException.csproj.CopyComplete
+/Users/besmith2/Desktop/Generate-NACException/obj/release/netcoreapp3.0/Generate-NACException.dll
+/Users/besmith2/Desktop/Generate-NACException/obj/release/netcoreapp3.0/Generate-NACException.pdb

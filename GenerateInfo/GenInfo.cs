@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -105,6 +105,12 @@ namespace Generate_NACException
             string ethernet = Bash("networksetup -listallhardwareports | awk '/Hardware Port: Ethernet/{getline; print $2}'");
             string tbEthernet = Bash("networksetup -listallhardwareports | awk '/Hardware Port: Thunderbolt Ethernet/{getline; print $2}'");
 
+ethernet = ethernet.Replace(Environment.NewLine, "");
+tbEthernet = tbEthernet.Replace(Environment.NewLine, "");
+
+Console.WriteLine($"Ethernet: { ethernet }");
+Console.WriteLine($"Thunderbolt Ethernet: { tbEthernet }");
+
             NetworkInterface[] adpaters = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface adapter in adpaters)
             {
@@ -112,8 +118,7 @@ namespace Generate_NACException
                 {
                     MACInfo.Add(FormatMACAddress(adapter.GetPhysicalAddress().ToString()));
                 }
-
-                if (adapter.Name.Equals(tbEthernet))
+                else if (adapter.Name.Equals(tbEthernet))
                 {
                     MACInfo.Add(FormatMACAddress(adapter.GetPhysicalAddress().ToString()));
                 }

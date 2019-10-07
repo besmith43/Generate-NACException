@@ -23,29 +23,6 @@
           "lib/netcoreapp2.0/_._": {}
         }
       }
-    },
-    ".NETCoreApp,Version=v3.0/osx-x64": {
-      "McMaster.Extensions.CommandLineUtils/2.4.2": {
-        "type": "package",
-        "dependencies": {
-          "System.ComponentModel.Annotations": "4.4.1"
-        },
-        "compile": {
-          "lib/netstandard2.0/McMaster.Extensions.CommandLineUtils.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/McMaster.Extensions.CommandLineUtils.dll": {}
-        }
-      },
-      "System.ComponentModel.Annotations/4.4.1": {
-        "type": "package",
-        "compile": {
-          "ref/netcoreapp2.0/_._": {}
-        },
-        "runtime": {
-          "lib/netcoreapp2.0/_._": {}
-        }
-      }
     }
   },
   "libraries": {
@@ -160,30 +137,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\besmith\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/Users/besmith2/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Git Projects\\Generate-NACException\\Generate-NACException.csproj",
+      "projectUniqueName": "/Users/besmith2/Desktop/Generate-NACException/Generate-NACException.csproj",
       "projectName": "Generate-NACException",
-      "projectPath": "D:\\Git Projects\\Generate-NACException\\Generate-NACException.csproj",
-      "packagesPath": "C:\\Users\\besmith\\.nuget\\packages\\",
-      "outputPath": "D:\\Git Projects\\Generate-NACException\\obj\\",
+      "projectPath": "/Users/besmith2/Desktop/Generate-NACException/Generate-NACException.csproj",
+      "packagesPath": "/Users/besmith2/.nuget/packages/",
+      "outputPath": "/Users/besmith2/Desktop/Generate-NACException/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\besmith\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/besmith2/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -215,31 +186,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Runtime.osx-x64",
-            "version": "[3.0.0, 3.0.0]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.osx-x64",
-            "version": "[3.0.0, 3.0.0]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Runtime.osx-x64",
-            "version": "[3.0.0, 3.0.0]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
-      }
-    },
-    "runtimes": {
-      "osx-x64": {
-        "#import": []
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }

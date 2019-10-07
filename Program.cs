@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
@@ -44,10 +44,17 @@ namespace Generate_NACException
 
             if(!File.Exists(FileName))
             {
-                using(StreamWriter sw = File.CreateText(FileName))
-                {
-                    sw.WriteLine(csvContent);
-                }
+		try
+		{
+                	using(StreamWriter sw = File.CreateText(FileName))
+                	{
+                    		sw.WriteLine(csvContent);
+                	}
+		}
+		catch
+		{
+			Console.WriteLine($"Couldn't write to path: { FileName }");
+		}
             }
             else
             {
