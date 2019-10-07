@@ -9,3 +9,14 @@ D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACExcept
 D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.AssemblyInfo.cs
 D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.dll
 D:\Git Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.pdb
+D:\Development\VS Community Projects\Generate-NACException\bin\Debug\netcoreapp3.0\Generate-NACException.exe
+D:\Development\VS Community Projects\Generate-NACException\bin\Debug\netcoreapp3.0\Generate-NACException.deps.json
+D:\Development\VS Community Projects\Generate-NACException\bin\Debug\netcoreapp3.0\Generate-NACException.runtimeconfig.json
+D:\Development\VS Community Projects\Generate-NACException\bin\Debug\netcoreapp3.0\Generate-NACException.runtimeconfig.dev.json
+D:\Development\VS Community Projects\Generate-NACException\bin\Debug\netcoreapp3.0\Generate-NACException.dll
+D:\Development\VS Community Projects\Generate-NACException\bin\Debug\netcoreapp3.0\Generate-NACException.pdb
+D:\Development\VS Community Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.csprojAssemblyReference.cache
+D:\Development\VS Community Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.AssemblyInfoInputs.cache
+D:\Development\VS Community Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.AssemblyInfo.cs
+D:\Development\VS Community Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.dll
+D:\Development\VS Community Projects\Generate-NACException\obj\Debug\netcoreapp3.0\Generate-NACException.pdb

@@ -42,10 +42,23 @@ namespace Generate_NACException
 
             string hostname = Environment.MachineName;
             hostname = hostname.ToUpper();
+            string roomLocation = "";
 
-            string roomLocation = hostname.Remove(hostname.LastIndexOf('-'), 4);
+            try
+            {
+                roomLocation = hostname.Remove(hostname.LastIndexOf('-'), 4);
+            }
+            catch
+            {
+                roomLocation = Environment.MachineName;
+                roomLocation = roomLocation.ToUpper();
+            }
 
             Console.WriteLine(roomLocation);
+            if(MACInfo.Count > 0)
+            {
+                Console.WriteLine(MACInfo[0]);
+            }
         }
 
         // the goal for all three of these functions is to produce the csv information for each
@@ -61,13 +74,7 @@ namespace Generate_NACException
             {
                 if (adapter.Name.Contains("Ethernet"))
                 {
-                    string mac_address = adapter.GetPhysicalAddress().ToString();
-                    mac_address = mac_address.Insert(2, ":");
-                    mac_address = mac_address.Insert(5, ":");
-                    mac_address = mac_address.Insert(8, ":");
-                    mac_address = mac_address.Insert(11, ":");
-                    mac_address = mac_address.Insert(14, ":");
-                    MACInfo.Add(mac_address);
+                    MACInfo.Add(FormatMACAddress(adapter.GetPhysicalAddress().ToString()));
                 }
             }
         }
@@ -135,6 +142,17 @@ namespace Generate_NACException
             string result = process.StandardOutput.ReadToEnd();
             process.WaitForExit();
             return result;
+        }
+
+        private string FormatMACAddress(string mac_address)
+        {
+            mac_address = mac_address.Insert(2, ":");
+            mac_address = mac_address.Insert(5, ":");
+            mac_address = mac_address.Insert(8, ":");
+            mac_address = mac_address.Insert(11, ":");
+            mac_address = mac_address.Insert(14, ":");
+
+            return mac_address;
         }
     }
 }
