@@ -12,13 +12,16 @@ namespace Generate_NACException
         private static string genericInfo = "Never,1825 Days";
         private static string OS;
         private static List<string> MACInfo;
+        private static string hostname;
+        private static string roomLocation;
 
-        public GenerateInfo()
+        public GenerateInfo(string passedHostName)
         {
+            hostname = passedHostName;
             MACInfo = new List<string>();
         }
 
-        public void StartGenerateInfo()
+        public string StartGenerateInfo()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -34,15 +37,13 @@ namespace Generate_NACException
             }
             else
             {
-                return; //"non-standard OS";
+                return "non-standard OS";
             }
 
             // get hostname
             // see https://docs.microsoft.com/en-us/dotnet/api/system.environment.machinename?view=netcore-3.0
 
-            string hostname = Environment.MachineName;
-            hostname = hostname.ToUpper();
-            string roomLocation = "";
+            roomLocation = "";
 
             try
             {
@@ -54,10 +55,13 @@ namespace Generate_NACException
                 roomLocation = roomLocation.ToUpper();
             }
 
-            Console.WriteLine(roomLocation);
             if(MACInfo.Count > 0)
             {
-                Console.WriteLine(MACInfo[0]);
+                return GenFinalString();
+            }
+            else
+            {
+                return "no ethernet mac addresses found";
             }
         }
 
@@ -88,13 +92,7 @@ namespace Generate_NACException
             {
                 if (adapter.Name.Contains("en"))
                 {
-                    string mac_address = adapter.GetPhysicalAddress().ToString();
-                    mac_address = mac_address.Insert(2, ":");
-                    mac_address = mac_address.Insert(5, ":");
-                    mac_address = mac_address.Insert(8, ":");
-                    mac_address = mac_address.Insert(11, ":");
-                    mac_address = mac_address.Insert(14, ":");
-                    MACInfo.Add(mac_address);
+                    MACInfo.Add(FormatMACAddress(adapter.GetPhysicalAddress().ToString()));
                 }
             }
         }
@@ -111,13 +109,7 @@ namespace Generate_NACException
             {
                 if (adapter.Name.Equals(ethernet))
                 {
-                    string mac_address = adapter.GetPhysicalAddress().ToString();
-                    mac_address = mac_address.Insert(2, ":");
-                    mac_address = mac_address.Insert(5, ":");
-                    mac_address = mac_address.Insert(8, ":");
-                    mac_address = mac_address.Insert(11, ":");
-                    mac_address = mac_address.Insert(14, ":");
-                    MACInfo.Add(mac_address);
+                    MACInfo.Add(FormatMACAddress(adapter.GetPhysicalAddress().ToString()));
                 }
             }
         }
@@ -153,6 +145,29 @@ namespace Generate_NACException
             mac_address = mac_address.Insert(14, ":");
 
             return mac_address;
+        }
+
+        private string GenFinalString()
+        {
+            if(MACInfo.Count == 1)
+            {
+                return $"{ headerInfo }{ Environment.NewLine }{ MACInfo[0] },{ MACInfo[0] },{ hostname },{ roomLocation },{ OS },{ genericInfo }";
+            }
+            else if(MACInfo.Count == 2)
+            {
+                return $"{ headerInfo }{ Environment.NewLine }{ MACInfo[0] },{ MACInfo[1] },{ hostname },{ roomLocation },{ OS },{ genericInfo }{ Environment.NewLine }{ MACInfo[1] },{ MACInfo[0] },{ hostname },{ roomLocation },{ OS },{ genericInfo }";
+            }
+            else
+            {
+                string tempFinalString = $"{ headerInfo }{ Environment.NewLine }{ MACInfo[0] },{ MACInfo[0] },{ hostname },{ roomLocation },{ OS },{ genericInfo }{ Environment.NewLine }";
+
+                foreach(var tempMAC in MACInfo)
+                {
+                    tempFinalString = $"{ tempFinalString }{ tempMAC }{ Environment.NewLine }";
+                }
+
+                return tempFinalString;
+            }
         }
     }
 }

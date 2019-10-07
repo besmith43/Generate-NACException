@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Development\\VS Community Projects\\Generate-NACException\\Generate-NACException.csproj": {}
+    "D:\\Git Projects\\Generate-NACException\\Generate-NACException.csproj": {}
   },
   "projects": {
-    "D:\\Development\\VS Community Projects\\Generate-NACException\\Generate-NACException.csproj": {
+    "D:\\Git Projects\\Generate-NACException\\Generate-NACException.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Development\\VS Community Projects\\Generate-NACException\\Generate-NACException.csproj",
+        "projectUniqueName": "D:\\Git Projects\\Generate-NACException\\Generate-NACException.csproj",
         "projectName": "Generate-NACException",
-        "projectPath": "D:\\Development\\VS Community Projects\\Generate-NACException\\Generate-NACException.csproj",
-        "packagesPath": "C:\\Users\\besmi\\.nuget\\packages\\",
-        "outputPath": "D:\\Development\\VS Community Projects\\Generate-NACException\\obj\\",
+        "projectPath": "D:\\Git Projects\\Generate-NACException\\Generate-NACException.csproj",
+        "packagesPath": "C:\\Users\\besmith\\.nuget\\packages\\",
+        "outputPath": "D:\\Git Projects\\Generate-NACException\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\besmi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\besmith\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -50,12 +50,31 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.osx-x64",
+              "version": "[3.0.0, 3.0.0]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-x64",
+              "version": "[3.0.0, 3.0.0]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.osx-x64",
+              "version": "[3.0.0, 3.0.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "osx-x64": {
+          "#import": []
         }
       }
     }
