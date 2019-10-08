@@ -193,13 +193,13 @@ namespace Generate_NACException
                     Console.WriteLine($"{ Environment.NewLine }{ Environment.NewLine }Please select the Nic that you would like to add to the CSV or q to quit.  (Max 2)");
                     for (int i = 1; i <= adapters.Length; i++)
                     {
-                        Console.WriteLine($"{ i - 1 } - { adapters[i - 1].Name }");
+                        Console.WriteLine($"{ i } - { adapters[i - 1].Name }");
                     }
 
                     string rawInput = Console.ReadLine();
                     int selectedIndex;
 
-                    if (rawInput.ToLower() == "q")
+                    if (rawInput.ToLower() == 'q')
                     {
                         quit = true;
                     }
