@@ -61,7 +61,7 @@ namespace Generate_NACException
             }
             else
             {
-                return "no ethernet mac addresses found";
+                return MACSelect();
             }
         }
 
@@ -175,6 +175,56 @@ namespace Generate_NACException
                 }
 
                 return tempFinalString;
+            }
+        }
+
+        private string MACSelect()
+        {
+            Console.WriteLine($"No Ethernet Nics were found.{ Environment.NewLine }Would you like to select from a list of all Nics found?");
+            string Answer = Console.ReadLine();
+
+            if (Answer == "y" || Answer == "Y" || Answer.ToLower() == "yes")
+            {
+                NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
+                bool quit = false;
+                
+                do
+                {
+                    Console.WriteLine($"{ Environment.NewLine }{ Environment.NewLine }Please select the Nic that you would like to add to the CSV or q to quit.  (Max 2)");
+                    for (int i = 1; i <= adapters.Length; i++)
+                    {
+                        Console.WriteLine(adapters[i - 1].Name);
+                    }
+
+                    string rawInput = Console.ReadLine();
+                    int selectedIndex;
+
+                    if (rawInput.ToLower() == "q")
+                    {
+                        quit = true;
+                        selectedIndex = -1;
+                    }
+                    else
+                    {
+                        Int32.TryParse(rawInput, out selectedIndex);
+                    }
+
+                    if (selectedIndex > adapters.Length)
+                    {
+                        Console.WriteLine("Your choice is outside of the options.");
+                    }
+                    else
+                    {
+                        MACInfo.Add(FormatMACAddress(adapters[selectedIndex - 1].GetPhysicalAddress().ToString()));
+                    }
+
+                } while (MACInfo.Count < 2 || !quit);
+
+                return GenFinalString();
+            }
+            else
+            {
+                return "no ethernet mac addresses found";
             }
         }
     }

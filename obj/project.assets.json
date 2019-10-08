@@ -24,7 +24,7 @@
         }
       }
     },
-    ".NETCoreApp,Version=v3.0/osx-x64": {
+    ".NETCoreApp,Version=v3.0/win-x64": {
       "McMaster.Extensions.CommandLineUtils/2.4.2": {
         "type": "package",
         "dependencies": {
@@ -217,15 +217,15 @@
         "warn": true,
         "downloadDependencies": [
           {
-            "name": "Microsoft.AspNetCore.App.Runtime.osx-x64",
+            "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
             "version": "[3.0.0, 3.0.0]"
           },
           {
-            "name": "Microsoft.NETCore.App.Host.osx-x64",
+            "name": "Microsoft.NETCore.App.Runtime.win-x64",
             "version": "[3.0.0, 3.0.0]"
           },
           {
-            "name": "Microsoft.NETCore.App.Runtime.osx-x64",
+            "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
             "version": "[3.0.0, 3.0.0]"
           }
         ],
@@ -238,7 +238,7 @@
       }
     },
     "runtimes": {
-      "osx-x64": {
+      "win-x64": {
         "#import": []
       }
     }

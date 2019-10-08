@@ -4,6 +4,15 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using McMaster.Extensions.CommandLineUtils;
 
+/*
+to do list
+
+add network printer functionality
+    for macs: bash command = ping "ip-address"; arp -a | grep "\<149.149.140.5\>" | awk '{print $4}'
+add menu if no ethernet nics are found for user selection
+    do I want to have a cmd line flag to do the menu directly?
+ */
+
 namespace Generate_NACException
 {
     class Program
@@ -12,6 +21,9 @@ namespace Generate_NACException
 
         [Option(Description = "Verbose")]
         public bool Verbose { get; }
+
+        [Option(Description = "Printer")]
+        public string Printer { get; }
 
         private void OnExecute()
         {
