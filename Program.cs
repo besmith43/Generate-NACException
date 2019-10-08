@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using McMaster.Extensions.CommandLineUtils;
@@ -35,8 +36,7 @@ namespace Generate_NACException
             if (csvContent.Equals("no ethernet mac addresses found") || csvContent.Equals("non-standard OS"))
             {
                 Console.WriteLine(csvContent);
-                Console.ReadLine();
-                System.Environment.Exit(1);
+                Process.GetCurrentProcess().Kill();
             }
 
             string path = "";
@@ -63,17 +63,17 @@ namespace Generate_NACException
 
             if (!File.Exists(FileName))
             {
-		try
-		{
+                try
+                {
                 	using(StreamWriter sw = File.CreateText(FileName))
                 	{
                     		sw.WriteLine(csvContent);
                 	}
-		}
-		catch
-		{
-			Console.WriteLine($"Couldn't write to path: { FileName }");
-		}
+		        }
+                catch
+                {
+                    Console.WriteLine($"Couldn't write to path: { FileName }");
+                }
             }
             else
             {

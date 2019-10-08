@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -197,9 +197,12 @@ namespace Generate_NACException
                     }
 
                     string rawInput = Console.ReadLine();
+                    rawInput = rawInput.Replace(Environment.NewLine, "");
                     int selectedIndex;
 
-                    if (rawInput.ToLower() == "q")
+                    Console.WriteLine(rawInput);
+
+                    if (rawInput == "q")
                     {
                         quit = true;
                     }
@@ -223,9 +226,16 @@ namespace Generate_NACException
                             Console.WriteLine(e);
                         }
                     }
-                } while (MACInfo.Count < 2 || quit);
+                } while (MACInfo.Count < 2 && !quit);
 
-                return GenFinalString();
+                if (MACInfo.Count != 0)
+                {
+                    return GenFinalString();
+                }
+                else
+                {
+                    return "no ethernet mac addresses found";
+                }
             }
             else
             {
