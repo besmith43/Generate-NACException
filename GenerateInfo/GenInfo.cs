@@ -180,7 +180,7 @@ namespace Generate_NACException
 
         private string MACSelect()
         {
-            Console.WriteLine($"No Ethernet Nics were found.{ Environment.NewLine }Would you like to select from a list of all Nics found?");
+            Console.WriteLine($"No Ethernet Nics were found.{ Environment.NewLine }Would you like to select from a list of all Nics found? (y/n)");
             string Answer = Console.ReadLine();
 
             if (Answer == "y" || Answer == "Y" || Answer.ToLower() == "yes")
@@ -193,7 +193,7 @@ namespace Generate_NACException
                     Console.WriteLine($"{ Environment.NewLine }{ Environment.NewLine }Please select the Nic that you would like to add to the CSV or q to quit.  (Max 2)");
                     for (int i = 1; i <= adapters.Length; i++)
                     {
-                        Console.WriteLine(adapters[i - 1].Name);
+                        Console.WriteLine($"{ i - 1 } - { adapters[i - 1].Name }");
                     }
 
                     string rawInput = Console.ReadLine();
@@ -202,22 +202,20 @@ namespace Generate_NACException
                     if (rawInput.ToLower() == "q")
                     {
                         quit = true;
-                        selectedIndex = -1;
                     }
                     else
                     {
                         Int32.TryParse(rawInput, out selectedIndex);
-                    }
 
-                    if (selectedIndex > adapters.Length)
-                    {
-                        Console.WriteLine("Your choice is outside of the options.");
+                        if (selectedIndex > adapters.Length)
+                        {
+                            Console.WriteLine("Your choice is outside of the options.");
+                        }
+                        else
+                        {
+                            MACInfo.Add(FormatMACAddress(adapters[selectedIndex - 1].GetPhysicalAddress().ToString()));
+                        }
                     }
-                    else
-                    {
-                        MACInfo.Add(FormatMACAddress(adapters[selectedIndex - 1].GetPhysicalAddress().ToString()));
-                    }
-
                 } while (MACInfo.Count < 2 || !quit);
 
                 return GenFinalString();
