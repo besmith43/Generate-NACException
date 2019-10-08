@@ -190,7 +190,7 @@ namespace Generate_NACException
                 
                 do
                 {
-                    Console.WriteLine($"{ Environment.NewLine }{ Environment.NewLine }Please select the Nic that you would like to add to the CSV or q to quit.  (Max 2)");
+                    Console.WriteLine($"{ Environment.NewLine }{ Environment.NewLine }Please select the Nic that you would like to add to the CSV or press q to quit.  (Max 2)");
                     for (int i = 1; i <= adapters.Length; i++)
                     {
                         Console.WriteLine($"{ i } - { adapters[i - 1].Name }");
@@ -199,24 +199,31 @@ namespace Generate_NACException
                     string rawInput = Console.ReadLine();
                     int selectedIndex;
 
-                    if (rawInput.ToLower() == 'q')
+                    if (rawInput.ToLower() == "q")
                     {
                         quit = true;
                     }
                     else
                     {
-                        Int32.TryParse(rawInput, out selectedIndex);
+                        try
+                        {
+                            Int32.TryParse(rawInput, out selectedIndex);
 
-                        if (selectedIndex > adapters.Length)
-                        {
-                            Console.WriteLine("Your choice is outside of the options.");
+                            if (selectedIndex > adapters.Length)
+                            {
+                                Console.WriteLine("Your choice is outside of the options.");
+                            }
+                            else
+                            {
+                                MACInfo.Add(FormatMACAddress(adapters[selectedIndex - 1].GetPhysicalAddress().ToString()));
+                            }
                         }
-                        else
+                        catch (Exception e)
                         {
-                            MACInfo.Add(FormatMACAddress(adapters[selectedIndex - 1].GetPhysicalAddress().ToString()));
+                            Console.WriteLine(e);
                         }
                     }
-                } while (MACInfo.Count < 2 || !quit);
+                } while (MACInfo.Count < 2 || quit);
 
                 return GenFinalString();
             }
