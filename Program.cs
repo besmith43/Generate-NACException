@@ -23,11 +23,26 @@ namespace Generate_NACException
         [Option(Description = "Verbose")]
         public bool Verbose { get; }
 
+        [Option(Description = "Version", ShortName = "V")]
+        public bool Version { get; }
+
         [Option(Description = "Printer")]
-        public string Printer { get; }
+        public bool Printer { get; }
+
+        public static string VersionNumber = "1.1";
 
         private void OnExecute()
         {
+            if (Version)
+            {
+                GetVersion();
+            }
+
+            if (Printer)
+            {
+                GenPrinter();
+            }
+
             string hostname = Environment.MachineName.ToUpper();
 
             GenerateInfo info = new GenerateInfo(hostname);
@@ -44,20 +59,22 @@ namespace Generate_NACException
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-#if DEBUG
-                path = GetApplicationRootDebug();
-#else
-                path = GetApplicationRootRelease();
-#endif
+                #if DEBUG
+                    path = GetApplicationRootDebug();
+                #else
+                    path = GetApplicationRootRelease();
+                #endif
+
                 FileName = $"{ path }\\{ GenerateFileName(hostname) }";
             }
             else
             {
-#if DEBUG
-                path = GetApplicationRootDebug();
-#else
-                path = GetApplicationRootRelease();
-#endif
+                #if DEBUG
+                    path = GetApplicationRootDebug();
+                #else
+                    path = GetApplicationRootRelease();
+                #endif
+
                 FileName = $"{ path }/{ GenerateFileName(hostname) }";
             }
 
@@ -129,6 +146,18 @@ namespace Generate_NACException
             string FormatedDate = $"{ DateTime.Today.ToString("d").Replace("/","") }";
 
             return $"{ FormatedDate }-{ host }.csv";
+        }
+
+        public static void GetVersion()
+        {
+            Console.WriteLine($"Generate-NACException Version: { VersionNumber }");
+            Process.GetCurrentProcess().Kill();
+        }
+
+        public static void GenPrinter()
+        {
+            Console.WriteLine("This feature is not yet implemented");
+            Process.GetCurrentProcess().Kill();
         }
     }
 }
