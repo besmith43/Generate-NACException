@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Git Projects\\Generate-NACException\\Generate-NACException.csproj": {}
+    "D:\\Development\\VS Community Projects\\Generate-NACException\\Generate-NACException.csproj": {}
   },
   "projects": {
-    "D:\\Git Projects\\Generate-NACException\\Generate-NACException.csproj": {
+    "D:\\Development\\VS Community Projects\\Generate-NACException\\Generate-NACException.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Git Projects\\Generate-NACException\\Generate-NACException.csproj",
+        "projectUniqueName": "D:\\Development\\VS Community Projects\\Generate-NACException\\Generate-NACException.csproj",
         "projectName": "Generate-NACException",
-        "projectPath": "D:\\Git Projects\\Generate-NACException\\Generate-NACException.csproj",
-        "packagesPath": "C:\\Users\\besmith\\.nuget\\packages\\",
-        "outputPath": "D:\\Git Projects\\Generate-NACException\\obj\\",
+        "projectPath": "D:\\Development\\VS Community Projects\\Generate-NACException\\Generate-NACException.csproj",
+        "packagesPath": "C:\\Users\\besmi\\.nuget\\packages\\",
+        "outputPath": "D:\\Development\\VS Community Projects\\Generate-NACException\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\besmith\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\besmi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
