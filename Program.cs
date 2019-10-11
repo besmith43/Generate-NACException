@@ -245,7 +245,7 @@ namespace Generate_NACException
 
             SaveContentToFile(csvContent, printerName, verboseFlag);
 */
-            FinishPrinter(awkOutput);
+            FinishPrinter(awkOutput, verboseFlag);
 
             Process.GetCurrentProcess().Kill();
         }
@@ -274,13 +274,12 @@ namespace Generate_NACException
                 Console.WriteLine("The MAC Address entered is too long");
             }
 
-            FinishPrinter(printerMAC);
+            FinishPrinter(printerMAC, verboseFlag);
 
-            Console.WriteLine("This feature is not yet implemented.");
             Process.GetCurrentProcess().Kill();
         }
 
-        public static void FinishPrinter(string macAddress)
+        public static void FinishPrinter(string macAddress, bool verboseFlag)
         {
             // get printer name from user input
 
