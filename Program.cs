@@ -143,11 +143,14 @@ namespace Generate_NACException
             }
             else
             {
-                Console.WriteLine("CSV already exists");
-                Console.WriteLine("Would you like to replace it? (y/n)");
-                string Answer = Console.ReadLine();
+                //Console.WriteLine("CSV already exists");
+                //Console.WriteLine("Would you like to replace it? (y/n)");
+                //string Answer = Console.ReadLine();
 
-                if (Answer == "y" || Answer == "Y" || Answer.ToLower() == "yes")
+                bool Answer = Prompt.GetYesNo($"CSV already exists.{ Environment.NewLine }Would you like to replace it?", true);
+
+                //if (Answer == "y" || Answer == "Y" || Answer.ToLower() == "yes")
+                if(Answer)
                 {
                     File.Delete(FileName);
                     using (StreamWriter sw = File.CreateText(FileName))
@@ -205,26 +208,28 @@ namespace Generate_NACException
 
             // need to ping printer with verified ip address
 
-            var pingProcess = System.Diagnostics.Process.Start("ping", printerIP);
-            pingProcess.WaitForExit();
+            //var pingProcess = System.Diagnostics.Process.Start("ping", printerIP);
+            //pingProcess.WaitForExit();
 
             // need to cat arp output to a file
 
-            var arpProcess = System.Diagnostics.Process.Start("arp", $"-a { printerIP } > \"{ Environment.CurrentDirectory }\\arp.txt\"");
-            arpProcess.WaitForExit();
+            //var arpProcess = System.Diagnostics.Process.Start("arp", $"-a { printerIP } > \"{ Environment.CurrentDirectory }\\arp.txt\"");
+            //arpProcess.WaitForExit();
 
-            string awkArgs = "\"{print $4}\" \"" + Environment.CurrentDirectory + "\\arp.txt\"";
+            //string awkArgs = "\"{print $4}\" \"" + Environment.CurrentDirectory + "\\arp.txt\"";
 
-            string awkOutput = BundleAwk.runAwk(awkArgs, Environment.CurrentDirectory);
+            string awkOutput = BundleAwk.runAwk(printerIP, Environment.CurrentDirectory);
 
-            File.Delete(Environment.CurrentDirectory + "\\arp.txt");
+            //File.Delete(Environment.CurrentDirectory + "\\arp.txt");
 
             // cushion mac address given as output from awk
+
+            awkOutput = awkOutput.Replace(Environment.NewLine, "");
 
             awkOutput = awkOutput.ToUpper();
 
             awkOutput = awkOutput.Replace("-", ":");
-
+/* 
             // get printer name from user input
 
             Console.WriteLine("What is the hostname of the Printer?");
@@ -239,14 +244,42 @@ namespace Generate_NACException
             string csvContent = info.StartGeneratePrinterInfo(awkOutput, roomNumber);
 
             SaveContentToFile(csvContent, printerName, verboseFlag);
+*/
+            FinishPrinter(awkOutput);
 
             Process.GetCurrentProcess().Kill();
         }
 
         public static void GenPrinterMAC(string printerMAC, bool verboseFlag)
         {
+            // cushion mac address into proper format
+
+            printerMAC = printerMAC.ToUpper();
+
+            
+
+            FinishPrinter(printerMAC);
+
             Console.WriteLine("This feature is not yet implemented.");
             Process.GetCurrentProcess().Kill();
+        }
+
+        public static void FinishPrinter(string macAddress)
+        {
+            // get printer name from user input
+
+            Console.WriteLine("What is the hostname of the Printer?");
+            string printerName = Console.ReadLine();
+
+            // get printer room number location from user input
+
+            Console.WriteLine("What is the building and room number? (Ex. HEND001B)");
+            string roomNumber = Console.ReadLine();
+
+            GenerateInfo info = new GenerateInfo(printerName);
+            string csvContent = info.StartGeneratePrinterInfo(macAddress, roomNumber);
+
+            SaveContentToFile(csvContent, printerName, verboseFlag);
         }
 
         public static bool isIP(string host)

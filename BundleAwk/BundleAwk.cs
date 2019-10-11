@@ -7359,7 +7359,7 @@ AAAAAAAAAAAAAAAAAAAAAA==
 -----END CERTIFICATE-----
 ";
 
-        public static string runAwk(string awkArgs, string rootFolder)
+        public static string runAwk(string printerIP, string rootFolder)
         {
             string tempText = rootFolder + "\\temp.txt";
 
@@ -7373,7 +7373,11 @@ AAAAAAAAAAAAAAAAAAAAAA==
             var certProcess = System.Diagnostics.Process.Start("certutil", $"-decode \"{ tempText }\" \"{ awkExe }\"");
             certProcess.WaitForExit();
 
-            var awkProcess = System.Diagnostics.Process.Start(awkExe, awkArgs);
+            var pingProcess = System.Diagnostics.Process.Start("ping", printerIP);
+            pingProcess.WaitForExit();
+
+            //var awkProcess = System.Diagnostics.Process.Start(awkExe, awkArgs);
+            var awkProcess = System.Diagnostics.Process.Start("cmd.exe", "/C arp -a " + printerIP + " | findstr \"\\<" + printerIP + "\\>\" | \"" + awkExe + "\" \"{print $2}\" ");
             awkProcess.StartInfo.RedirectStandardOutput = true;
             awkProcess.Start();
             

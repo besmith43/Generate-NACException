@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Net.NetworkInformation;
+using McMaster.Extensions.CommandLineUtils;
 
 namespace Generate_NACException
 {
@@ -189,10 +190,13 @@ namespace Generate_NACException
 
         private string MACSelect()
         {
-            Console.WriteLine($"No Ethernet Nics were found.{ Environment.NewLine }Would you like to select from a list of all Nics found? (y/n)");
-            string Answer = Console.ReadLine();
+            //Console.WriteLine($"No Ethernet Nics were found.{ Environment.NewLine }Would you like to select from a list of all Nics found? (y/n)");
+            //string Answer = Console.ReadLine();
 
-            if (Answer == "y" || Answer == "Y" || Answer.ToLower() == "yes")
+            bool Answer = Prompt.GetYesNo($"No Ethernet Nics were found.{ Environment.NewLine }Would you like to select from a list of all Nics found?", true);
+
+            //if (Answer == "y" || Answer == "Y" || Answer.ToLower() == "yes")
+            if (Answer)
             {
                 NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
                 bool quit = false;
