@@ -154,6 +154,7 @@ namespace Generate_NACException
             return result;
         }
 
+        // see GenPrinterMAC function in Program.cs if you need to modify this
         private string FormatMACAddress(string mac_address)
         {
             mac_address = mac_address.Insert(2, ":");

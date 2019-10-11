@@ -256,7 +256,23 @@ namespace Generate_NACException
 
             printerMAC = printerMAC.ToUpper();
 
-            
+            if (printerMAC.Length < 12)
+            {
+                Console.WriteLine("The MAC Address entered is not long enough.");
+                Process.GetCurrentProcess().Kill();
+            }
+            else if (printerMAC.Length == 12)
+            {
+                printerMAC = printerMAC.Insert(2, ":");
+                printerMAC = printerMAC.Insert(5, ":");
+                printerMAC = printerMAC.Insert(8, ":");
+                printerMAC = printerMAC.Insert(11, ":");
+                printerMAC = printerMAC.Insert(14, ":");
+            }
+            else
+            {
+                Console.WriteLine("The MAC Address entered is too long");
+            }
 
             FinishPrinter(printerMAC);
 
