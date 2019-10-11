@@ -65,6 +65,15 @@ namespace Generate_NACException
             }
         }
 
+        public string StartGeneratePrinterInfo(string MACAddress, string RoomNumber)
+        {
+            roomLocation = RoomNumber;
+            MACInfo.Add(MACAddress);
+            OS = "Printer";
+
+            return GenFinalString();
+        }
+
         // the goal for all three of these functions is to produce the csv information for each
         // need to gather the number of valid nics, get their mac addresses, and get the computers hostname
         // in this case valid nics means physical ethernet port

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
@@ -26,8 +27,12 @@ namespace Generate_NACException
         [Option(Description = "Version", ShortName = "V")]
         public bool Version { get; }
 
-        [Option(Description = "Printer")]
-        public bool Printer { get; }
+        // ? means that the variable can be null
+        [Option(Template = "--printerip <IP-Address>", Description = "Printer IP Address")]
+        public string? PrinterIP { get; }
+
+        [Option(Template = "--printermac <MAC-Address>", Description = "Printer MAC Address")]
+        public string? PrinterMAC { get; }
 
         public static string VersionNumber = "1.1";
 
@@ -38,10 +43,23 @@ namespace Generate_NACException
                 GetVersion();
             }
 
-            if (Printer)
+            bool verbose = false;
+
+            if (Verbose)
             {
-                GenPrinter();
+                verbose = true;
             }
+
+            if (PrinterIP != null)
+            {
+                GenPrinterIP(PrinterIP, verbose);
+            }
+            else if (PrinterMAC != null)
+            {
+                GenPrinterMAC(PrinterMAC, verbose);
+            }
+
+            // default mode
 
             string hostname = Environment.MachineName.ToUpper();
 
@@ -54,65 +72,7 @@ namespace Generate_NACException
                 Process.GetCurrentProcess().Kill();
             }
 
-            string path = "";
-            string FileName = "";
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                #if DEBUG
-                    path = GetApplicationRootDebug();
-                #else
-                    path = GetApplicationRootRelease();
-                #endif
-
-                FileName = $"{ path }\\{ GenerateFileName(hostname) }";
-            }
-            else
-            {
-                #if DEBUG
-                    path = GetApplicationRootDebug();
-                #else
-                    path = GetApplicationRootRelease();
-                #endif
-
-                FileName = $"{ path }/{ GenerateFileName(hostname) }";
-            }
-
-            if (!File.Exists(FileName))
-            {
-                try
-                {
-                	using(StreamWriter sw = File.CreateText(FileName))
-                	{
-                    		sw.WriteLine(csvContent);
-                	}
-		        }
-                catch
-                {
-                    Console.WriteLine($"Couldn't write to path: { FileName }");
-                }
-            }
-            else
-            {
-                Console.WriteLine("CSV already exists");
-                Console.WriteLine("Would you like to replace it? (y/n)");
-                string Answer = Console.ReadLine();
-
-                if (Answer == "y" || Answer == "Y" || Answer.ToLower() == "yes")
-                {
-                    File.Delete(FileName);
-                    using (StreamWriter sw = File.CreateText(FileName))
-                    {
-                        sw.WriteLine(csvContent);
-                    }
-                }
-            }
-
-            if (Verbose)
-            {
-                Console.WriteLine($"Path: { FileName }");
-                Console.WriteLine($"CSV Content: { csvContent }");
-            }
+            SaveContentToFile(csvContent, hostname, verbose);
         }
 
         // see http://codebuckets.com/2017/10/19/getting-the-root-directory-path-for-net-core-applications/ for original text
@@ -141,6 +101,69 @@ namespace Generate_NACException
             }
         }
 
+        public static void SaveContentToFile(string content, string devicename, bool verboseFlag)
+        {
+            string path = "";
+            string FileName = "";
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                #if DEBUG
+                    path = GetApplicationRootDebug();
+                #else
+                    path = GetApplicationRootRelease();
+                #endif
+
+                FileName = $"{ path }\\{ GenerateFileName(devicename) }";
+            }
+            else
+            {
+                #if DEBUG
+                    path = GetApplicationRootDebug();
+                #else
+                    path = GetApplicationRootRelease();
+                #endif
+
+                FileName = $"{ path }/{ GenerateFileName(devicename) }";
+            }
+
+            if (!File.Exists(FileName))
+            {
+                try
+                {
+                	using(StreamWriter sw = File.CreateText(FileName))
+                	{
+                    		sw.WriteLine(content);
+                	}
+		        }
+                catch
+                {
+                    Console.WriteLine($"Couldn't write to path: { FileName }");
+                }
+            }
+            else
+            {
+                Console.WriteLine("CSV already exists");
+                Console.WriteLine("Would you like to replace it? (y/n)");
+                string Answer = Console.ReadLine();
+
+                if (Answer == "y" || Answer == "Y" || Answer.ToLower() == "yes")
+                {
+                    File.Delete(FileName);
+                    using (StreamWriter sw = File.CreateText(FileName))
+                    {
+                        sw.WriteLine(content);
+                    }
+                }
+            }
+
+            if (verboseFlag)
+            {
+                Console.WriteLine($"Path: { FileName }");
+                Console.WriteLine($"CSV Content: { content }");
+            }
+        }
+
         public static string GenerateFileName(string host)
         {
             string FormatedDate = $"{ DateTime.Today.ToString("d").Replace("/","") }";
@@ -154,10 +177,82 @@ namespace Generate_NACException
             Process.GetCurrentProcess().Kill();
         }
 
-        public static void GenPrinter()
+        
+        // will only work if the printer is in the same building
+        public static void GenPrinterIP(string printerIP, bool verboseFlag)
         {
-            Console.WriteLine("This feature is not yet implemented");
+            bool answer = Prompt.GetYesNo($"This feature will only work if you are in the same building as the printer you are trying to generate a csv for.{ Environment.NewLine }Would you like to continue?", true);
+
+            if (!answer)
+            {
+                Process.GetCurrentProcess().Kill();
+            }
+
+            // first validate the ip address string, then ping, then arp, then generate string
+
+            if (isIP(printerIP))
+            {
+                Console.WriteLine($"{ printerIP } is a valid ip address");
+                // run ping, then arp, then generate string
+                // will most likely need to figure out wget to obtain an awk exe
+                // see https://www.arclab.com/en/kb/csharp/download-file-from-internet-to-string-or-file.html for more info
+            }
+            else
+            {
+                Console.WriteLine("The IP Addres given is not valid.");
+                Process.GetCurrentProcess().Kill();
+            }
+
+            // need to ping printer with verified ip address
+
+            var pingProcess = System.Diagnostics.Process.Start("ping", printerIP);
+            pingProcess.WaitForExit();
+
+            // need to cat arp output to a file
+
+            var arpProcess = System.Diagnostics.Process.Start("arp", $"-a { printerIP } > \"{ Environment.CurrentDirectory }\\arp.txt\"");
+            arpProcess.WaitForExit();
+
+            string awkArgs = "\"{print $4}\" \"" + Environment.CurrentDirectory + "\\arp.txt\"";
+
+            string awkOutput = BundleAwk.runAwk(awkArgs, Environment.CurrentDirectory);
+
+            File.Delete(Environment.CurrentDirectory + "\\arp.txt");
+
+            // cushion mac address given as output from awk
+
+            awkOutput = awkOutput.ToUpper();
+
+            awkOutput = awkOutput.Replace("-", ":");
+
+            // get printer name from user input
+
+            Console.WriteLine("What is the hostname of the Printer?");
+            string printerName = Console.ReadLine();
+
+            // get printer room number location from user input
+
+            Console.WriteLine("What is the building and room number? (Ex. HEND001B)");
+            string roomNumber = Console.ReadLine();
+
+            GenerateInfo info = new GenerateInfo(printerName);
+            string csvContent = info.StartGeneratePrinterInfo(awkOutput, roomNumber);
+
+            SaveContentToFile(csvContent, printerName, verboseFlag);
+
             Process.GetCurrentProcess().Kill();
+        }
+
+        public static void GenPrinterMAC(string printerMAC, bool verboseFlag)
+        {
+            Console.WriteLine("This feature is not yet implemented.");
+            Process.GetCurrentProcess().Kill();
+        }
+
+        public static bool isIP(string host)
+        {
+            IPAddress ip;
+            return IPAddress.TryParse(host, out ip);
         }
     }
 }
