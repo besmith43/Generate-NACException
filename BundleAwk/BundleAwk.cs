@@ -7398,16 +7398,31 @@ AAAAAAAAAAAAAAAAAAAAAA==
             var pingProcess = System.Diagnostics.Process.Start("ping", "-c 4 " + printerIP);
             pingProcess.WaitForExit();
 
-            Console.WriteLine("bash " + "-c \'arp -a | grep \"\\<" + printerIP + "\\>\" | awk \'\"\'\"\'{print $4}\'\"\'\"\'");
-            var awkProcess = System.Diagnostics.Process.Start("bash", "-c \'arp -a | grep \"\\<" + printerIP + "\\>\" | awk \'\"\'\"\'{print $4}\'\"\'\"");
-            awkProcess.StartInfo.RedirectStandardOutput = true;
-            awkProcess.Start();
-            
-            StreamReader reader = awkProcess.StandardOutput;
-            string awkOutput = reader.ReadToEnd();
-            awkProcess.WaitForExit();
+            //Console.WriteLine("bash " + "-c \'arp -a | grep \"\\<" + printerIP + "\\>\" | awk \'\"\'\"\'{print $4}\'\"\'\"");
+            string awkOutput = Bash("arp -a | grep \"\\<" + printerIP + "\\>\" | awk '{print $4}'");
 
             return awkOutput;
+        }
+
+        private string Bash(string cmd)
+        {
+            var escapedArgs = cmd.Replace("\"", "\\\"");
+
+            var process = new Process()
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "/bin/bash",
+                    Arguments = $"-c \"{escapedArgs}\"",
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                }
+            };
+            process.Start();
+            string result = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            return result;
         }
     }
 }
