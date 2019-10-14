@@ -34,7 +34,7 @@ namespace Generate_NACException
         [Option(Template = "--printermac <MAC-Address>", Description = "Printer MAC Address")]
         public string? PrinterMAC { get; }
 
-        public static string VersionNumber = "1.1";
+        public static string VersionNumber = "1.5";
 
         private void OnExecute()
         {
