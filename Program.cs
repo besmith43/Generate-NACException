@@ -52,7 +52,11 @@ namespace Generate_NACException
 
             if (PrinterIP != null)
             {
-                GenPrinterIP(PrinterIP, verbose);
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    GenPrinterIPWin(PrinterIP, verbose);
+                }
+                
             }
             else if (PrinterMAC != null)
             {
@@ -182,7 +186,7 @@ namespace Generate_NACException
 
         
         // will only work if the printer is in the same building
-        public static void GenPrinterIP(string printerIP, bool verboseFlag)
+        public static void GenPrinterIPWin(string printerIP, bool verboseFlag)
         {
             bool answer = Prompt.GetYesNo($"This feature will only work if you are in the same building as the printer you are trying to generate a csv for.{ Environment.NewLine }Would you like to continue?", true);
 
@@ -218,7 +222,17 @@ namespace Generate_NACException
 
             //string awkArgs = "\"{print $4}\" \"" + Environment.CurrentDirectory + "\\arp.txt\"";
 
-            string awkOutput = BundleAwk.runAwk(printerIP, Environment.CurrentDirectory);
+            string awkOutput = "";
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                awkOutput = BundleAwk.runAwkWin(printerIP, Environment.CurrentDirectory);
+            }
+            else
+            {
+                awkOutput = BundleAwk.runAwkUnix(printerIP);
+            }
+            
 
             //File.Delete(Environment.CurrentDirectory + "\\arp.txt");
 

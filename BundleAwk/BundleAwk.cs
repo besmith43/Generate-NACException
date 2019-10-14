@@ -7359,7 +7359,7 @@ AAAAAAAAAAAAAAAAAAAAAA==
 -----END CERTIFICATE-----
 ";
 
-        public static string runAwk(string printerIP, string rootFolder)
+        public static string runAwkWin(string printerIP, string rootFolder)
         {
             string tempText = rootFolder + "\\temp.txt";
 
@@ -7387,6 +7387,24 @@ AAAAAAAAAAAAAAAAAAAAAA==
 
             System.IO.File.Delete(tempText);
             System.IO.File.Delete(awkExe);
+
+            return awkOutput;
+        }
+
+        public static string runAwkUnix(string printerIP)
+        {
+            //ping "ip-address"; arp -a | grep "\<149.149.140.5\>" | awk '{print $4}'
+
+            var pingProcess = System.Diagnostics.Process.Start("ping", printerIP);
+            pingProcess.WaitForExit();
+
+            var awkProcess = System.Diagnostics.Process.Start("bash", "-c ping " + printerIP + "; arp -a | grep \"\\<" + printerIP + "\\>\" | awk \'{print $4}\'");
+            awkProcess.StartInfo.RedirectStandardOutput = true;
+            awkProcess.Start();
+            
+            StreamReader reader = awkProcess.StandardOutput;
+            string awkOutput = reader.ReadToEnd();
+            awkProcess.WaitForExit();
 
             return awkOutput;
         }
