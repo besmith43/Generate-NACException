@@ -7398,7 +7398,7 @@ AAAAAAAAAAAAAAAAAAAAAA==
             var pingProcess = System.Diagnostics.Process.Start("ping", printerIP);
             pingProcess.WaitForExit();
 
-            var awkProcess = System.Diagnostics.Process.Start("bash", "-c ping " + printerIP + "; arp -a | grep \"\\<" + printerIP + "\\>\" | awk \'{print $4}\'");
+            var awkProcess = System.Diagnostics.Process.Start("bash", "-c ping -c 4" + printerIP + "; arp -a | grep \"\\<" + printerIP + "\\>\" | awk \'{print $4}\'");
             awkProcess.StartInfo.RedirectStandardOutput = true;
             awkProcess.Start();
             
