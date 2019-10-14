@@ -7395,8 +7395,11 @@ AAAAAAAAAAAAAAAAAAAAAA==
         {
             //ping "ip-address"; arp -a | grep "\<149.149.140.5\>" | awk '{print $4}'
 
-            Console.WriteLine("bash " + "-c \'ping -c 4 " + printerIP + "; arp -a | grep \"\\<" + printerIP + "\\>\" | awk \'\"\'\"\'{print $4}\'\"\'\"\'");
-            var awkProcess = System.Diagnostics.Process.Start("bash", "-c \'ping -c 4" + printerIP + "; arp -a | grep \"\\<" + printerIP + "\\>\" | awk \'\"\'\"\'{print $4}\'\"\'\"");
+            var pingProcess = System.Diagnostics.Process.Start("ping", "-c 4 " + printerIP);
+            pingProcess.WaitForExit();
+
+            Console.WriteLine("bash " + "-c \'arp -a | grep \"\\<" + printerIP + "\\>\" | awk \'\"\'\"\'{print $4}\'\"\'\"\'");
+            var awkProcess = System.Diagnostics.Process.Start("bash", "-c \'arp -a | grep \"\\<" + printerIP + "\\>\" | awk \'\"\'\"\'{print $4}\'\"\'\"");
             awkProcess.StartInfo.RedirectStandardOutput = true;
             awkProcess.Start();
             
