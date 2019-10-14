@@ -7405,7 +7405,7 @@ AAAAAAAAAAAAAAAAAAAAAA==
             return awkOutput;
         }
 
-        private string Bash(string cmd)
+        private static string Bash(string cmd)
         {
             var escapedArgs = cmd.Replace("\"", "\\\"");
 
