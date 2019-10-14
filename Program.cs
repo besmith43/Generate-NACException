@@ -52,11 +52,7 @@ namespace Generate_NACException
 
             if (PrinterIP != null)
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    GenPrinterIPWin(PrinterIP, verbose);
-                }
-                
+                GenPrinterIP(PrinterIP, verbose);
             }
             else if (PrinterMAC != null)
             {
@@ -186,7 +182,7 @@ namespace Generate_NACException
 
         
         // will only work if the printer is in the same building
-        public static void GenPrinterIPWin(string printerIP, bool verboseFlag)
+        public static void GenPrinterIP(string printerIP, bool verboseFlag)
         {
             bool answer = Prompt.GetYesNo($"This feature will only work if you are in the same building as the printer you are trying to generate a csv for.{ Environment.NewLine }Would you like to continue?", true);
 
