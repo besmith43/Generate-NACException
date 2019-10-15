@@ -7385,7 +7385,7 @@ AAAAAAAAAAAAAAAAAAAAAA==
             return awkOutput;
         }
 
-        public static string runAwkWinCU(string printerIP, string rootFolder)
+/*         public static string runAwkWinCU(string printerIP, string rootFolder)
         {
             string tempText = rootFolder + "\\temp.txt";
 
@@ -7416,7 +7416,7 @@ AAAAAAAAAAAAAAAAAAAAAA==
 
             return awkOutput;
         }
-
+*/
         public static string runAwkUnix(string printerIP)
         {
             //ping "ip-address"; arp -a | grep "\<149.149.140.5\>" | awk '{print $4}'
