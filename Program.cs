@@ -222,7 +222,7 @@ namespace Generate_NACException
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                awkOutput = BundleAwk.runAwkWin(printerIP, Environment.CurrentDirectory);
+                awkOutput = BundleAwk.runAwkWinPWSH(printerIP, Environment.CurrentDirectory);
             }
             else
             {
