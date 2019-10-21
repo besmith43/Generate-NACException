@@ -78,17 +78,22 @@ namespace Generate_NACException
         // see http://codebuckets.com/2017/10/19/getting-the-root-directory-path-for-net-core-applications/ for original text
         public static string GetApplicationRootDebug()
         {
+            return Environment.CurrentDirectory;
+            
+            /*
             var exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
             Regex appPathMatcher = new Regex(@"(?<!fil)[A-Za-z]:\\+[\S\s]*?(?=\\+bin)");
             var appRoot = appPathMatcher.Match(exePath).Value;
-            return appRoot;
+            return appRoot; */
         }
 
         public static string GetApplicationRootRelease()
         {
+            return Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+
             //return Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             //return Path.GetDirectoryName(Environment.CurrentDirectory);
-
+/*
             string tempPath = Environment.CurrentDirectory;
 
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !tempPath.Contains("Desktop"))
@@ -98,7 +103,7 @@ namespace Generate_NACException
             else
             {
                 return tempPath;
-            }
+            } */
         }
 
         public static void SaveContentToFile(string content, string devicename, bool verboseFlag)
