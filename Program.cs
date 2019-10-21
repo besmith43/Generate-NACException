@@ -28,13 +28,13 @@ namespace Generate_NACException
         public bool Version { get; }
 
         // ? means that the variable can be null
-        [Option(Template = "--printerip <IP-Address>", Description = "Printer IP Address")]
+        [Option(Template = "--printerip <IP-Address>", Description = "Printer IP Address (Ex. 150.150.120.55)")]
         public string? PrinterIP { get; }
 
-        [Option(Template = "--printermac <MAC-Address>", Description = "Printer MAC Address")]
+        [Option(Template = "--printermac <MAC-Address>", Description = "Printer MAC Address (Ex: 509b4d2b921f)")]
         public string? PrinterMAC { get; }
 
-        public static string VersionNumber = "1.5";
+        public static string VersionNumber = "2.0";
 
         private void OnExecute()
         {
